@@ -1,0 +1,2 @@
+recursive-include bopen *
+global-exclude *pyc
