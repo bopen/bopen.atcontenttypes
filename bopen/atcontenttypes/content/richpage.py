@@ -19,6 +19,17 @@ RichPageSchema = ATDocumentSchema.copy() + atapi.Schema((
 
     # -*- Your Archetypes field definitions here ... -*-
 
+    atapi.ImageField(
+        'content_logo',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.ImageWidget(
+            label=_(u"Content Logo"),
+            description=_(u"Field description"),
+        ),
+        validators=('isNonEmptyFile'),
+    ),
+
+
     atapi.TextField(
         'long_description',
         storage=atapi.AnnotationStorage(),
@@ -56,6 +67,8 @@ class RichPage(ATDocument):
     description = atapi.ATFieldProperty('description')
 
     # -*- Your ATSchema to Python Property Bridges Here ... -*-
+    content_logo = atapi.ATFieldProperty('content_logo')
+
     long_description = atapi.ATFieldProperty('long_description')
 
 

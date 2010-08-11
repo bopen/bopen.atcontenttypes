@@ -30,6 +30,17 @@ RichFolderSchema = folder.ATFolderSchema.copy() + atapi.Schema((
     ),
 
 
+    atapi.ImageField(
+        'content_logo',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.ImageWidget(
+            label=_(u"Content Image"),
+            description=_(u"Field description"),
+        ),
+        validators=('isNonEmptyFile'),
+    ),
+
+
 ))
 
 # Set storage on fields copied from ATFolderSchema, making sure
@@ -56,6 +67,8 @@ class RichFolder(folder.ATFolder):
     description = atapi.ATFieldProperty('description')
 
     # -*- Your ATSchema to Python Property Bridges Here ... -*-
+    content_logo = atapi.ATFieldProperty('content_logo')
+
     long_description = atapi.ATFieldProperty('long_description')
 
 
