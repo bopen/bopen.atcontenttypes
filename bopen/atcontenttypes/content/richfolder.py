@@ -19,6 +19,7 @@ RichFolderSchema = folder.ATFolderSchema.copy() + atapi.Schema((
 
     atapi.TextField(
         'long_description',
+        searchable=True,
         storage=atapi.AnnotationStorage(),
         validators = ('isTidyHtmlWithCleanup',),
         default_output_type = 'text/x-html-safe',
