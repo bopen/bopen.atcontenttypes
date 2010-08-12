@@ -32,6 +32,12 @@ RichFolderSchema = folder.ATFolderSchema.copy() + atapi.Schema((
 
     atapi.ImageField(
         'content_logo',
+        original_size=(128, 128),
+        sizes={
+            'micro': (16, 32),
+            'mini': (32, 64),
+            'normal': (64, 128),
+        },
         storage=atapi.AnnotationStorage(),
         widget=atapi.ImageWidget(
             label=_(u"Content Image"),
