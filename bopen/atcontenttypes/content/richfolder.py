@@ -10,7 +10,8 @@ from Products.ATContentTypes.content import schemata
 # -*- Message Factory Imported Here -*-
 from bopen.atcontenttypes import atcontenttypesMessageFactory as _
 
-from bopen.atcontenttypes.interfaces import IRichFolder
+from bopen.atcontenttypes.interfaces import IRichFolder, IHaveLongDescription
+from bopen.atcontenttypes.interfaces.longdescription import IHaveLongDescription as Z2IHaveLongDescription
 from bopen.atcontenttypes.config import PROJECTNAME
 
 RichFolderSchema = folder.ATFolderSchema.copy() + atapi.Schema((
@@ -65,8 +66,8 @@ schemata.finalizeATCTSchema(
 
 class RichFolder(folder.ATFolder):
     """A rich folder"""
-    implements(IRichFolder)
-
+    implements(IRichFolder, IHaveLongDescription)
+    __implements__ = (getattr(folder.ATFolder,'__implements__',()),) + (Z2IHaveLongDescription,)
     meta_type = "RichFolder"
     schema = RichFolderSchema
 

@@ -12,7 +12,8 @@ from Products.ATContentTypes.atct import ATDocument, ATDocumentSchema
 # -*- Message Factory Imported Here -*-
 from bopen.atcontenttypes import atcontenttypesMessageFactory as _
 
-from bopen.atcontenttypes.interfaces import IRichPage
+from bopen.atcontenttypes.interfaces import IRichPage, IHaveLongDescription
+from bopen.atcontenttypes.interfaces.longdescription import IHaveLongDescription as Z2IHaveLongDescription
 from bopen.atcontenttypes.config import PROJECTNAME
 
 RichPageSchema = ATDocumentSchema.copy() + atapi.Schema((
@@ -64,8 +65,8 @@ schemata.finalizeATCTSchema(RichPageSchema, moveDiscussion=False)
 
 class RichPage(ATDocument):
     """A rich page"""
-    implements(IRichPage)
-
+    implements(IRichPage, IHaveLongDescription)
+    __implements__ = (getattr(ATDocument,'__implements__',()),) + (Z2IHaveLongDescription,)
     meta_type = "RichPage"
     schema = RichPageSchema
 
