@@ -2,7 +2,7 @@
 """
 
 from zope.i18nmessageid import MessageFactory
-from bopen.atcontenttypes import config
+from bopen.atcontenttypes import monkey_patches, config
 
 from Products.Archetypes import atapi
 from Products.CMFCore import utils
