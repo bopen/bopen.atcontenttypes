@@ -79,5 +79,25 @@ class RichFolder(folder.ATFolder):
 
     long_description = atapi.ATFieldProperty('long_description')
 
+    # workaround to make resized images:
+    # the problem is described on http://plone.293351.n2.nabble.com/ImageField-AttributeStorage-and-Max-Recursion-Depth-Error-td4447134.html
+    # so, applied the workaround on http://www.seantis.ch/news/blog/archive/2009/06/22/archetypes-annotationstorage-and-image-scaling
+    def __bobo_traverse__(self, REQUEST, name):
+        """Transparent access to image scales
+        """
+        if name.startswith('content_logo'):
+            field = self.getField('content_logo')
+            image = None
+            if name == 'content_logo':
+                image = field.getScale(self)
+            else:
+                scalename = name[len('content_logo_'):]
+                if scalename in field.getAvailableSizes(self):
+                    image = field.getScale(self, scale=scalename)
+            if image is not None and not isinstance(image, basestring):
+                # image might be None or '' for empty images
+                return image
+
+        return base.ATCTContent.__bobo_traverse__(self, REQUEST, name)
 
 atapi.registerType(RichFolder, PROJECTNAME)
