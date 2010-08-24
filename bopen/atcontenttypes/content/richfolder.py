@@ -98,6 +98,6 @@ class RichFolder(folder.ATFolder):
                 # image might be None or '' for empty images
                 return image
 
-        return base.ATCTContent.__bobo_traverse__(self, REQUEST, name)
+        return folder.ATFolder.__bobo_traverse__(self, REQUEST, name)
 
 atapi.registerType(RichFolder, PROJECTNAME)
