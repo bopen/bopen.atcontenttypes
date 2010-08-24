@@ -13,7 +13,8 @@
                        getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
                        templateId template/getId;
                        text here/getText;
-                       has_long_description python:portal.portal_interface.objectImplements(here,'bopen.atcontenttypes.interfaces.longdescription.IHaveLongDescription');">
+                       has_long_description python:portal.portal_interface.objectImplements(here,'bopen.atcontenttypes.interfaces.longdescription.IHaveLongDescription');
+                       item_logo python:has_long_description and here.getContent_logo() or '';">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -32,6 +33,11 @@
         </p>
 
         <p class="documentDescription" tal:condition="has_long_description">
+            <span class="rich_content_logo_right"
+                tal:condition="item_logo">
+                <img src="#" alt=""
+                    tal:attributes="src string:${here/absolute_url}/content_logo" />
+            </span>
             <metal:field use-macro="python:here.widget('long_description', mode='view')">
             Long Description
             </metal:field>
