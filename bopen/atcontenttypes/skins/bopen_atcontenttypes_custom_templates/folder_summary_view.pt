@@ -12,7 +12,9 @@
     <metal:main-macro define-macro="main"
                       tal:define="kssClassesView context/@@kss_field_decorator_view;
                                   getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
-                                  templateId template/getId">
+                                  templateId template/getId;
+                                  has_long_description python:portal.portal_interface.objectImplements(here,'bopen.atcontenttypes.interfaces.longdescription.IHaveLongDescription');
+                                  long_description python:has_long_description and here.getLong_description() or '';">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -22,10 +24,16 @@
 
         <div tal:replace="structure provider:plone.belowcontenttitle" />
 
+    <tal:description tal:condition="not:has_long_description">
         <p metal:use-macro="here/kss_generic_macros/macros/generic_description_view">
             Description
         </p>
-
+    </tal:description>
+    <tal:long_description tal:condition="has_long_description">
+        <p tal:content="structure long_description">
+            Long Description
+        </p>
+    </tal:long_description>
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
         <div metal:define-macro="text-field-view"
