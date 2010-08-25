@@ -15,7 +15,8 @@
                                   templateId template/getId;
                                   has_long_description python:portal.portal_interface.objectImplements(here,'bopen.atcontenttypes.interfaces.longdescription.IHaveLongDescription');
                                   long_description python:has_long_description and here.getLong_description() or '';
-                                  no_link_to_contents python:has_long_description and here.getDont_link_to_contents()">
+                                  no_link_to_contents python:has_long_description and here.getDont_link_to_contents();
+                                  has_content_logo python:has_long_description and here.getContent_logo() or '';">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -31,8 +32,15 @@
         </p>
     </tal:description>
     <tal:long_description tal:condition="has_long_description">
-        <p tal:content="structure long_description">
+        <p>
+            <span class="rich_content_logo_right"
+                tal:condition="has_content_logo">
+                <img src="#" alt=""
+                    tal:attributes="src string:${here/absolute_url}/content_logo" />
+            </span>
+            <metal:field use-macro="python:here.widget('long_description', mode='view')">
             Long Description
+            </metal:field>
         </p>
     </tal:long_description>
         <div tal:replace="structure provider:plone.abovecontentbody" />
@@ -112,7 +120,7 @@
                         <img src="" alt=""
                              tal:condition="exists:item_object/image_thumb"
                              tal:replace="structure python: path('nocall:item_object/tag')(scale='thumb', css_class='tileImage')" />
-                        <img src="#" alt="" tal:condition="item_logo"
+                        <img src="#" alt="" tal:condition="item_logo" class="rich_content_logo"
                              tal:attributes="src string:${item_url}/content_logo_normal" />
                     <h2 class="tileHeadline"
                         tal:attributes="class python:item_logo and 'tileHeadline side_logo_richtitle' or 'tileHeadline'"
