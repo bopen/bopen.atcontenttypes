@@ -10,22 +10,17 @@
 
   <tal:block tal:condition="similar">
     <tal:similar tal:repeat="s similar">
-      <dd class="portletItem" tal:define="oddrow repeat/s/odd"
-        tal:attributes="class python:oddrow and 'portletItem even' or 'portletItem odd'">
+      <dd class="portletItem">
+        <div>
         <a href=""
-           tal:attributes="href s/getURL"
-           tal:content="s/Title">
+           tal:attributes="href s/getURL">
+           <span tal:content="s/Title">
            Title
+           </span>
         </a>
+        </div>
       </dd>
     </tal:similar>
   </tal:block>
-
-
-    <dd class="portletFooter">
-        <span class="portletBottomLeft"></span>
-
-        <span class="portletBottomRight"></span>
-    </dd>
 
 </dl>
