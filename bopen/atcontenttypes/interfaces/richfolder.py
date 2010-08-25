@@ -15,9 +15,20 @@ class IRichFolder(Interface):
         description=_(u"Field description"),
     )
 #
+    dont_link_to_contents = schema.Bool(
+        title=_(u"Don't link to contents"),
+        required=False,
+        description=_(u"Field description"),
+    )
+#
     long_description = schema.Text(
         title=_(u"Long Description"),
         required=False,
         description=_(u"Will be shown befor the body and where long descriptions are needed"),
     )
 #
+    text = schema.Text(
+        title=_(u"Body text"),
+        required=False,
+        description=_(u"Field description"),
+    )

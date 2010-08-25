@@ -1,7 +1,6 @@
 # -*- extra stuff goes here -*-
 from zope.interface import Interface
 from Products.Archetypes import utils
-from richpage import IRichPage
 from richfolder import IRichFolder
 import longdescription
 

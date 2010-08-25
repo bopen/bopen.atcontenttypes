@@ -6,6 +6,7 @@ from zope.interface import implements
 from Products.Archetypes import atapi
 from Products.ATContentTypes.content import folder
 from Products.ATContentTypes.content import schemata
+from Products.ATContentTypes.configuration import zconf
 
 # -*- Message Factory Imported Here -*-
 from bopen.atcontenttypes import atcontenttypesMessageFactory as _
@@ -31,6 +32,20 @@ RichFolderSchema = folder.ATFolderSchema.copy() + atapi.Schema((
         ),
     ),
 
+    atapi.TextField('text',
+        required=False,
+        searchable=True,
+        primary=True,
+        storage = atapi.AnnotationStorage(),
+        validators = ('isTidyHtmlWithCleanup',),
+        #validators = ('isTidyHtml',),
+        default_output_type = 'text/x-html-safe',
+        widget = atapi.RichWidget(
+            description = '',
+            label = _(u'label_body_text', default=u'Body Text'),
+            rows = 25,
+            allow_file_upload = zconf.ATDocument.allow_document_upload),
+    ),
 
     atapi.ImageField(
         'content_logo',
@@ -48,7 +63,20 @@ RichFolderSchema = folder.ATFolderSchema.copy() + atapi.Schema((
         validators=('isNonEmptyFile'),
     ),
 
-
+    atapi.BooleanField('dont_link_to_contents',
+        default = False,
+        required = False,
+        languageIndependent = True,
+        storage=atapi.AnnotationStorage(),
+        widget = atapi.BooleanWidget(
+            label= _(
+                u'help_label_dont_link_to_contents',
+                default=u'Don\'t link to contents'),
+            description = _(
+                u'help_description_dont_link_to_contents',
+                default=u'If selected, this will avoid users the ability to click the contents of the folder.')
+            ),
+    ),
 ))
 
 # Set storage on fields copied from ATFolderSchema, making sure
@@ -62,7 +90,7 @@ schemata.finalizeATCTSchema(
     folderish=True,
     moveDiscussion=False
 )
-
+RichFolderSchema.changeSchemataForField('dont_link_to_contents', 'settings')
 
 class RichFolder(folder.ATFolder):
     """A rich folder"""
@@ -76,9 +104,9 @@ class RichFolder(folder.ATFolder):
 
     # -*- Your ATSchema to Python Property Bridges Here ... -*-
     content_logo = atapi.ATFieldProperty('content_logo')
-
     long_description = atapi.ATFieldProperty('long_description')
-
+    dont_link_to_contents = atapi.ATFieldProperty('dont_link_to_contents')
+    text = atapi.ATFieldProperty('text')
     # workaround to make resized images:
     # the problem is described on http://plone.293351.n2.nabble.com/ImageField-AttributeStorage-and-Max-Recursion-Depth-Error-td4447134.html
     # so, applied the workaround on http://www.seantis.ch/news/blog/archive/2009/06/22/archetypes-annotationstorage-and-image-scaling
