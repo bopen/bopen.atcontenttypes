@@ -73,6 +73,7 @@ def similar(instance):
     types_to_search = set(instance.data.types_to_search)
     # NOTE: now the modification of this monkey patch begins
     security_manager = getSecurityManager()
+    context_children_uids = [c.UID() for c in instance.context.objectValues()]
     for score, docid in res:
         normscore = int((score/maxscore)*100)
         if count > num or normscore < instance.data.cutoff:
@@ -86,6 +87,8 @@ def similar(instance):
         if hasattr(instance.context, 'Language') and hasattr(brain, 'Language'):
             if brain.Language!=instance.context.Language():
                 continue
+        if brain.UID in context_children_uids:
+            continue
         if brain['portal_type'] in types_to_search:
             similar.append(brain)
             count += 1
