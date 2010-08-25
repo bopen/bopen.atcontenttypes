@@ -88,7 +88,9 @@
                                        item_start item/start/ISO|item/StartDate|nothing;
                                        item_end item/end/ISO|item/EndDate|nothing;
                                        item_object item/getObject;
+                                       item_to_be_excluded python:getattr(item_object, 'exclude_from_nav', False);
                                    "
+                     tal:condition="not:item_to_be_excluded"
                      tal:attributes="class string:tileItem visualIEFloatFix vevent ${item_type_class}">
                 <tal:ok_links_to_contents tal:condition="not:no_link_to_contents">
                     <a href="#"
