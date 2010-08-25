@@ -4,14 +4,8 @@
     i18n_domain="bopen.atcontenttypes">
 
   <!-- configure your content components here -->
-  
+
   <!-- -*- extra stuff goes here -*- -->
-  <class class=".richpage.RichPage">
-    <require
-        permission="zope2.View"
-        interface="..interfaces.IRichPage"
-        />
-  </class>
   <class class=".richfolder.RichFolder">
     <require
         permission="zope2.View"
