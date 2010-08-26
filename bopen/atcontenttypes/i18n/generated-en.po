@@ -24,7 +24,7 @@ msgid "footer_company_info"
 msgstr "Linux and Open Source Services"
 
 msgid "footer_company_address"
-msgstr "Tecnopolo Tiburtino - Via Giacomo Peroni, 442-444 - 00131 Rome (Italy) - phone: +39 06 8036 8957"
+msgstr "Tecnopolo Tiburtino - Via Giacomo Peroni, 442-444 - 00131 Rome, Italy - phone: +39 06 8036 8957"
 
 msgid "terms_of_service"
 msgstr "terms of service"
