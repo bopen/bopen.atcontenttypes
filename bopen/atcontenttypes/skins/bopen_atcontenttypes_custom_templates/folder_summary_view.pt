@@ -32,16 +32,15 @@
         </p>
     </tal:description>
     <tal:long_description tal:condition="has_long_description">
-        <p>
-            <span class="rich_content_logo_right"
-                tal:condition="has_content_logo">
-                <img src="#" alt=""
+        <div>
+            <tal:content_logo tal:condition="has_content_logo">
+                <img class="rich_content_logo_right" src="#" alt=""
                     tal:attributes="src string:${here/absolute_url}/content_logo" />
-            </span>
+            </tal:content_logo>
             <metal:field use-macro="python:here.widget('long_description', mode='view')">
             Long Description
             </metal:field>
-        </p>
+        </div>
     </tal:long_description>
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
@@ -122,8 +121,9 @@
                         <img src="" alt=""
                              tal:condition="exists:item_object/image_thumb"
                              tal:replace="structure python: path('nocall:item_object/tag')(scale='thumb', css_class='tileImage')" />
-                        <img src="#" alt="" tal:condition="item_logo" class="rich_content_logo"
-                             tal:attributes="src string:${item_url}/content_logo_normal" />
+                        <img src="#" alt=""
+                             tal:condition="item_logo"
+                             tal:replace="structure python: path('nocall:item_object/content_logo/tag')(scale='normal', css_class='rich_content_logo')" />
                     <h2 class="tileHeadline"
                         tal:attributes="class python:item_logo and 'tileHeadline side_logo_richtitle' or 'tileHeadline'"
                         tal:content="item_title_or_id">Item Title
@@ -187,11 +187,11 @@
                             description
                         </span>
                     </p>
-                    <p class="tileBody" tal:condition="item_long_description">
-                        <span class="description" tal:content="structure item_long_description">
+                    <div class="tileBody" tal:condition="item_long_description">
+                        <div class="description" tal:content="structure item_long_description">
                             description
-                        </span>
-                    </p>
+                        </div>
+                    </div>
 
                     <p class="tileFooter">
                         <a href="" tal:condition="not:no_link_to_contents"
