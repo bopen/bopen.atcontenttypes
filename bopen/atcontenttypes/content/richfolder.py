@@ -128,4 +128,10 @@ class RichFolder(folder.ATFolder):
 
         return folder.ATFolder.__bobo_traverse__(self, REQUEST, name)
 
+    def content_logo_tag(self, *args, **kwargs):
+        """
+        """
+        logo_field = self.getField('content_logo')
+        return logo_field.tag(self, *args, **kwargs)
+
 atapi.registerType(RichFolder, PROJECTNAME)

@@ -34,8 +34,8 @@
     <tal:long_description tal:condition="has_long_description">
         <div>
             <tal:content_logo tal:condition="has_content_logo">
-                <img class="rich_content_logo_right" src="#" alt=""
-                    tal:attributes="src string:${here/absolute_url}/content_logo" />
+                <img src="" alt=""
+                    tal:replace="structure python: path('nocall:here/content_logo_tag')(css_class='rich_content_logo_right')" />
             </tal:content_logo>
             <metal:field use-macro="python:here.widget('long_description', mode='view')">
             Long Description
@@ -98,11 +98,11 @@
                              tal:condition="exists:item_object/image_thumb"
                              tal:replace="structure python: path('nocall:item_object/tag')(scale='thumb', css_class='tileImage')" />
                     </a>
-                    <a  href="#" class="rich_content_logo"
+                    <a  href="#"
                         tal:condition="item_logo"
                         tal:attributes="href string:${item_url};">
                         <img src="#" alt=""
-                             tal:attributes="src string:${item_url}/content_logo_normal" />
+                             tal:replace="structure python: item_object.content_logo_tag(scale='normal', css_class='rich_content_logo')" />
                     </a>
                     <h2 class="tileHeadline"
                         tal:attributes="class python:item_logo and 'tileHeadline side_logo_richtitle' or 'tileHeadline'"
